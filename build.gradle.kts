@@ -30,4 +30,5 @@ dependencies {
     implementation("com.microsoft.sqlserver:mssql-jdbc:12.10.0.jre11")
     implementation("io.ktor:ktor-server-content-negotiation:3.4.2")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.4.2")
+    implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
 }
