@@ -11,10 +11,10 @@ class CategoryRepository {
 
         DatabaseFactory.getConnection().use { connection ->
             val sql = """
-                SELECT CategoryId, UserId, Name, Type, ColorHex
-                FROM Categories
-                WHERE UserId = ? AND Type = ?
-                ORDER BY Name
+                SELECT "CategoryId", "UserId", "Name", "Type", "ColorHex"
+                FROM "Categories"
+                WHERE "UserId" = ? AND "Type" = ?
+                ORDER BY "Name"
             """.trimIndent()
 
             connection.prepareStatement(sql).use { statement ->
@@ -42,9 +42,9 @@ class CategoryRepository {
     fun createCategory(request: CreateCategoryRequest): CategoryDto {
         DatabaseFactory.getConnection().use { connection ->
             val sql = """
-                INSERT INTO Categories (UserId, Name, Type, ColorHex)
-                OUTPUT INSERTED.CategoryId, INSERTED.UserId, INSERTED.Name, INSERTED.Type, INSERTED.ColorHex
+                INSERT INTO "Categories" ("UserId", "Name", "Type", "ColorHex")
                 VALUES (?, ?, ?, ?)
+                RETURNING "CategoryId", "UserId", "Name", "Type", "ColorHex"
             """.trimIndent()
 
             connection.prepareStatement(sql).use { statement ->

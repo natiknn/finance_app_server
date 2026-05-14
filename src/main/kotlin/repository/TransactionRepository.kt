@@ -11,20 +11,20 @@ class TransactionRepository {
 
         DatabaseFactory.getConnection().use { connection ->
             val sql = """
-                SELECT
-                    t.TransactionId,
-                    t.UserId,
-                    t.CategoryId,
-                    c.Name AS CategoryName,
-                    c.ColorHex,
-                    t.Type,
-                    t.Amount,
-                    t.Comment,
-                    t.TransactionDate
-                FROM Transactions t
-                JOIN Categories c ON t.CategoryId = c.CategoryId
-                WHERE t.UserId = ?
-                ORDER BY t.TransactionDate DESC, t.TransactionId DESC
+               SELECT
+                   t."TransactionId",
+                   t."UserId",
+                   t."CategoryId",
+                   c."Name" AS CategoryName,
+                   c."ColorHex",
+                   t."Type",
+                   t."Amount",
+                   t."Comment",
+                   t."TransactionDate"
+               FROM "Transactions" t
+               JOIN "Categories" c ON t."CategoryId" = c."CategoryId"
+               WHERE t."UserId" = ?
+               ORDER BY t."TransactionDate" DESC, t."TransactionId" DESC
             """.trimIndent()
 
             connection.prepareStatement(sql).use { statement ->
@@ -55,9 +55,9 @@ class TransactionRepository {
     fun createTransaction(request: CreateTransactionRequest): TransactionDto {
         DatabaseFactory.getConnection().use { connection ->
             val insertSql = """
-                INSERT INTO Transactions (UserId, CategoryId, Type, Amount, Comment, TransactionDate)
-                OUTPUT INSERTED.TransactionId
+                INSERT INTO "Transactions" ("UserId", "CategoryId", "Type", "Amount", "Comment", "TransactionDate")
                 VALUES (?, ?, ?, ?, ?, ?)
+                RETURNING "TransactionId"
             """.trimIndent()
 
             val transactionId = connection.prepareStatement(insertSql).use { statement ->
@@ -74,18 +74,18 @@ class TransactionRepository {
 
             val selectSql = """
                 SELECT
-                    t.TransactionId,
-                    t.UserId,
-                    t.CategoryId,
-                    c.Name AS CategoryName,
-                    c.ColorHex,
-                    t.Type,
-                    t.Amount,
-                    t.Comment,
-                    t.TransactionDate
-                FROM Transactions t
-                JOIN Categories c ON t.CategoryId = c.CategoryId
-                WHERE t.TransactionId = ?
+                    t."TransactionId",
+                    t."UserId",
+                    t."CategoryId",
+                    c."Name" AS CategoryName,
+                    c."ColorHex",
+                    t."Type",
+                    t."Amount",
+                    t."Comment",
+                    t."TransactionDate"
+                FROM "Transactions" t
+                JOIN "Categories" c ON t."CategoryId" = c."CategoryId"
+                WHERE t."TransactionId" = ?
             """.trimIndent()
 
             connection.prepareStatement(selectSql).use { statement ->

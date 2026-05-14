@@ -27,7 +27,7 @@ dependencies {
     implementation(libs.ktor.server.config.yaml)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
-    implementation("com.microsoft.sqlserver:mssql-jdbc:12.10.0.jre11")
+    implementation("org.postgresql:postgresql:42.7.3")
     implementation("io.ktor:ktor-server-content-negotiation:3.4.2")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.4.2")
     implementation("io.github.cdimascio:dotenv-kotlin:6.5.1")
